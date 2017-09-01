@@ -42,9 +42,7 @@ def mail_content(fileToSend = None):
         content_type, encoding = mimetypes.guess_type(fileToSend)
         if content_type is None or encoding is not None:
             content_type = "application/octet-stream"
-        
         maintype, subtype = content_type.split("/", 1)
-        
         if maintype == "text":
             fp = open(fileToSend)
             # Note: we should handle calculating the charset
@@ -65,7 +63,7 @@ def mail_content(fileToSend = None):
             fp.close()
         if not content_type.startswith("text/"):
             encoders.encode_base64(msg)
-            encoders.encode_base64(attachment) 
+            encoders.encode_base64(attachment)
         attachment.add_header("Content-Disposition", "attachment",
                               filename=fileToSend)
         text_part = MIMEText('ping report, please see it', 'plain', 'utf-8')
@@ -79,10 +77,9 @@ def check_report_file():
         return to_be_check_file
     else:
         print "no report file"
-    
+
 
 if __name__ == "__main__":
     file = check_report_file()
     content_to_send = mail_content(file)
-    loign_and_send_mail(content_to_send)    
-        
+    loign_and_send_mail(content_to_send)
